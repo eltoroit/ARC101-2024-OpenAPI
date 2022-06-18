@@ -1,25 +1,24 @@
 const express = require('express');
+const db = require('../services/db');
 const router = express.Router();
 
 /* GET quotes listing. */
-router.get('/', function (req, res, next) {
-    // res.json({});
-    res.render('quotes', {
-        title: "Quotes",
-        quotes: [
-            {
-                text: 'First, solve the problem. Then, write the code.',
-                author: 'John Johnson'
-            },
-            {
-                text: 'the quick brown fox jumped over the lazy dog.',
-                author: 'IBM Mainframe'
+router.get('/', async (req, res, next) => {
+    debugger;
+    try {
+        const rows = await db.query('SELECT id, quote, author FROM quote');
+        // res.json(rows);
+        res.render('quotes', {
+            title: "Quotes",
+            rows,
+            meta: {
+                page: rows.length
             }
-        ],
-        meta: {
-            page: 2
-        }
-    });
+        });
+    } catch (err) {
+        console.error(`Error while getting quotes `, err.message);
+        next(err);
+    }
 });
 
 module.exports = router;

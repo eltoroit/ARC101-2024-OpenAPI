@@ -11,8 +11,8 @@
     <% } else { %> <%= meta.page %> quotes found<br />
     <% } %>
     <ul>
-      <% for (let quote of quotes) { %>
-      <li><%= quote.text %> <br /><i><%= quote.author %></i></li>
+      <% for (let row of rows) { %>
+      <li><%= row.quote %> <br /><i><%= row.author %></i></li>
       <% } %>
     </ul>
   </body>
