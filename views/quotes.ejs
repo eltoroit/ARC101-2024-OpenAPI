@@ -7,6 +7,23 @@
 
   <body>
     <h1>Quotes</h1>
+    <h2>New Quote</h2>
+    <form action="/quotes" method="post">
+      <table>
+        <tr>
+          <th>Quote</th>
+          <td><input type="text" name="quote" /></td>
+        </tr>
+        <tr>
+          <th>Author</th>
+          <td><input type="text" name="author" /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><input type="submit" /></td>
+        </tr>
+      </table>
+    </form>
+    <h2>All quotes</h2>
     <% if(meta.page === 1) { %> 1 quote found<br />
     <% } else { %> <%= meta.page %> quotes found<br />
     <% } %>
