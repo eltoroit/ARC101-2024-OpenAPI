@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "DEBUG=webserver:* node ./bin/www",
-    "debugger": "node inspect ./bin/www"
+    "start": "DEBUG=webserver:* node ./bin/www.js",
+    "debugger": "node inspect ./bin/www.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.6",
