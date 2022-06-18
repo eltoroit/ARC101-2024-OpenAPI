@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+
+  <body>
+    <h1>Quotes</h1>
+    <% if(meta.page === 1) { %> 1 quote found<br />
+    <% } else { %> <%= meta.page %> quotes found<br />
+    <% } %>
+    <ul>
+      <% for (let quote of quotes) { %>
+      <li><%= quote.text %> <br /><i><%= quote.author %></i></li>
+      <% } %>
+    </ul>
+  </body>
+</html>

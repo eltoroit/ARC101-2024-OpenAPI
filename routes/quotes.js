@@ -3,15 +3,21 @@ const router = express.Router();
 
 /* GET quotes listing. */
 router.get('/', function (req, res, next) {
-    res.json({
-        data: [
+    // res.json({});
+    res.render('quotes', {
+        title: "Quotes",
+        quotes: [
             {
-                quote: 'First, solve the problem. Then, write the code.',
+                text: 'First, solve the problem. Then, write the code.',
                 author: 'John Johnson'
+            },
+            {
+                text: 'the quick brown fox jumped over the lazy dog.',
+                author: 'IBM Mainframe'
             }
         ],
         meta: {
-            page: 1
+            page: 2
         }
     });
 });
