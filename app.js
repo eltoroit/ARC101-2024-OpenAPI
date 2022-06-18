@@ -23,9 +23,8 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(
         description: "A simple Express Library API",
       },
       servers: [
-        {
-          url: "http://localhost:3000",
-        },
+        { url: "http://localhost:3000" },
+        { url: "https://et-demo-arc101-002.herokuapp.com" },
       ],
     },
     apis: ["./routes/*.js"],
