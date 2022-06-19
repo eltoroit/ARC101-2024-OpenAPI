@@ -73,9 +73,8 @@ router.get('/', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: The quote description by id
- *         contens:
+ *         content:
  *           application/json:
- *             type: object
  *             schema:
  *               $ref: '#/components/schemas/Quote'
  *       400:
