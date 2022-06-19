@@ -34,24 +34,29 @@ const router = express.Router();
  * @openapi
  * /quotes:
  *   get:
+ *     operationId: getAllQuotes
  *     summary: Returns the list of all the quotes
  *     tags: [Quotes]
  *     responses:
- *       200:
+ *       default:
  *         description: The list of the quotes
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Quote'
+ *         schema:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Quote'
+ *       404:
+ *         description: No data found
  *       500:
- *         description: Error retrieving quotes
+ *         description: Some server error
  */
 router.get('/', async (req, res, next) => {
     try {
         const rows = await db.query('SELECT id, quote, author FROM quote');
-        res.status(200).json(rows);
+        if (rows.length === 0) {
+            res.status(404).json(rows);
+        } else {
+            res.status(200).json(rows);
+        }
     } catch (err) {
         res.status(500).json(err);
     }
@@ -61,6 +66,7 @@ router.get('/', async (req, res, next) => {
  * @openapi
  * /quotes/{id}:
  *   get:
+ *     operationId: getQuoteById
  *     summary: Get the quote by id
  *     tags: [Quotes]
  *     parameters:
@@ -71,16 +77,12 @@ router.get('/', async (req, res, next) => {
  *         required: true
  *         description: The quote's id
  *     responses:
- *       200:
+ *       default:
  *         description: The quote description by id
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Quote'
- *       400:
- *         description: Multiple quotes found with the same id
+ *         schema:
+ *           $ref: '#/components/schemas/Quote'
  *       404:
- *         description: The quote was not found
+ *         description: No data found
  *       500:
  *         description: Some server error
  */
@@ -89,11 +91,11 @@ router.get('/:id', async (req, res, next) => {
         const { id } = req.params;
         const rows = await db.query('SELECT id, quote, author FROM quote WHERE id = $1', [id]);
         if (rows.length === 0) {
-            res.status(404).json(rows);
+            res.status(404).json({ error: "Quote not found", rows });
         } else if (rows.length === 1) {
             res.status(200).json(rows[0]);
         } else {
-            res.status(400).json(rows);
+            res.status(500).json({ error: "Too many rows", rows });
         }
     } catch (err) {
         res.status(500).json(err);
@@ -104,6 +106,7 @@ router.get('/:id', async (req, res, next) => {
  * @openapi
  * /quotes:
  *   post:
+ *     operationId: createQuote
  *     summary: Create a new quote
  *     tags: [Quotes]
  *     requestBody:
@@ -113,7 +116,7 @@ router.get('/:id', async (req, res, next) => {
  *           schema:
  *             $ref: '#/components/schemas/Quote'
  *     responses:
- *       200:
+ *       default:
  *         description: The quote was successfully created
  *         content:
  *           application/json:
@@ -136,6 +139,7 @@ router.post('/', async (req, res, next) => {
  * @openapi
  * /quotes/{id}:
  *  put:
+ *    operationId: updateQuoteById
  *    summary: Update the quote by the id
  *    tags: [Quotes]
  *    parameters:
@@ -152,16 +156,12 @@ router.post('/', async (req, res, next) => {
  *          schema:
  *            $ref: '#/components/schemas/Quote'
  *    responses:
- *      200:
+ *      default:
  *        description: The quote was updated
  *        content:
  *          application/json:
  *            schema:
  *              $ref: '#/components/schemas/Quote'
- *      400:
- *        description: Bad request
- *      404:
- *        description: The quote was not found
  *      500:
  *        description: Some server error
  */
@@ -171,10 +171,10 @@ router.put("/:id", async (req, res) => {
         const { quote, author } = req.body;
         const rows = await db.query('SELECT id, quote, author FROM quote WHERE id = $1', [id]);
         if (rows.length === 0) {
-            res.status(404).json(rows);
+            res.status(500).json({ error: "No data found to update", rows });
         } else if (rows.length === 1) {
             if (quote || author) {
-                let sql = "UPDATE quote SET quote = $1, author = $2 WHERE id = $3";
+                let sql = "UPDATE quote SET quote = $1, author = $2 WHERE id = $3 RETURNING *";
                 let data = { quote, author };
                 if (!quote) data.quote = rows[0].quote;
                 if (!author) data.author = rows[0].author;
@@ -182,10 +182,10 @@ router.put("/:id", async (req, res) => {
                 const result = await db.query(sql, params);
                 res.status(200).json(result);
             } else {
-                res.status(400).json({ error: "No data provided" });
+                res.status(500).json({ error: "No data provided" });
             }
         } else {
-            res.status(500).json(rows);
+            res.status(500).json({ error: "Too mny rows found, can't update more than one record", rows });
         }
     } catch (err) {
         res.status(500).json(err);
@@ -196,6 +196,7 @@ router.put("/:id", async (req, res) => {
  * @swagger
  * /quotes/{id}:
  *   delete:
+ *     operationId: deleteQuoteById
  *     summary: Remove the quote by id
  *     tags: [Quotes]
  *     parameters:
@@ -206,20 +207,17 @@ router.put("/:id", async (req, res) => {
  *         required: true
  *         description: The quote id
  *     responses:
- *       200:
+ *       default:
  *         description: The quote was deleted
- *       404:
- *         description: The quote was not found
  *       500:
  *        description: Some server error
  */
-
 router.delete("/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const rows = await db.query('SELECT id, quote, author FROM quote WHERE id = $1', [id]);
         if (rows.length === 0) {
-            res.status(404).json(rows);
+            res.status(500).json({ error: "No data found to be deleted", rows });
         } else if (rows.length === 1) {
             const result = await db.query("DELETE FROM quote WHERE id = $1", [id]);
             res.status(200).json(result);
@@ -228,7 +226,5 @@ router.delete("/:id", async (req, res) => {
         res.status(500).json(err);
     }
 });
-
-
 
 module.exports = router;
