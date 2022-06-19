@@ -40,10 +40,12 @@ const router = express.Router();
  *     responses:
  *       default:
  *         description: The list of the quotes
- *         schema:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/Quote'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Quote'
  *       404:
  *         description: No data found
  *       500:
@@ -79,8 +81,10 @@ router.get('/', async (req, res, next) => {
  *     responses:
  *       default:
  *         description: The quote description by id
- *         schema:
- *           $ref: '#/components/schemas/Quote'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Quote'
  *       404:
  *         description: No data found
  *       500:
