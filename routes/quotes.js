@@ -224,11 +224,11 @@ router.put("/:id", async (req, res) => {
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: integer
  *         required: true
  *         description: The quote id
  *     responses:
- *       default:
+ *       200:
  *         description: The quote was deleted
  *       404:
  *         description: No data found
