@@ -24,6 +24,14 @@ const router = express.Router();
  *         author:
  *           type: string
  *           description: The quote's author
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *           description: The quote's author
+ *         updated_at:
+ *           type: string
+ *           format: date-time
+ *           description: The quote's author
  *       example:
  *         quote: Java is to JavaScript what car is to Carpet.
  *         author: Chris Heilmann.
@@ -132,9 +140,11 @@ router.post('/', async (req, res, next) => {
     const { quote, author } = req.body;
     try {
         const result = await db.query('INSERT INTO quote(quote, author) VALUES ($1, $2) RETURNING *', [quote, author]);
-        delete result.created_at;
-        delete result.updated_at;
-        res.status(200).json(result);
+        if (result.length === 1) {
+            res.status(200).json(result[0]);
+        } else {
+            res.status(500).json(result);
+        }
     } catch (err) {
         res.status(500).json(err);
     }
@@ -161,7 +171,7 @@ router.post('/', async (req, res, next) => {
  *          schema:
  *            $ref: '#/components/schemas/Quote'
  *    responses:
- *      default:
+ *      200:
  *        description: The quote was updated
  *        content:
  *          application/json:
@@ -187,12 +197,16 @@ router.put("/:id", async (req, res) => {
                 if (!author) data.author = rows[0].author;
                 let params = [data.quote, data.author, id];
                 const result = await db.query(sql, params);
-                res.status(200).json(result);
+                if (result.length === 1) {
+                    res.status(200).json(result[0]);
+                } else {
+                    res.status(500).json(result);
+                }
             } else {
                 res.status(500).json({ error: "No data provided" });
             }
         } else {
-            res.status(500).json({ error: "Too mny rows found, can't update more than one record", rows });
+            res.status(500).json({ error: "Too many rows found, can't update more than one record", rows });
         }
     } catch (err) {
         res.status(500).json(err);
