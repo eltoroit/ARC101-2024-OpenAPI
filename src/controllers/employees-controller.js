@@ -5,6 +5,21 @@ import { EmployeesService } from "../services/employees-service.js";
 import { EmployeeNotFoundError } from "../services/employee-not-found-error.js";
 import { ExpressError } from "../express-error.js";
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     EmployeeForAdd:
+ *       type: object
+ *       properties:
+ *         lastName:
+ *           type: string
+ *         firstName:
+ *           type: string
+ *         title:
+ *           type: string
+ *       required: [ lastName, firstName, title ]
+ */
 export class EmployeesController {
 	/**
 	 * Hooks up the employees REST-routes to their respective implementations in the provided employees service.
@@ -14,6 +29,32 @@ export class EmployeesController {
 	static registerRoutes(app, service) {
 		app.route("/employees")
 			.get((_req, res) => res.json(service.getAll()))
+
+			/**
+			 * @openapi
+			 * /employees:
+			 *   post:
+			 *     summary: Add a new employee
+			 *     operationId: AddEmployee
+			 *     tags: [ Employees ]
+			 *     requestBody:
+			 *       required: true
+			 *       content:
+			 *         application/json:
+			 *           schema:
+			 *             $ref: "#/components/schemas/EmployeeForAdd"
+			 *     responses:
+			 *       "200":
+			 *         description: successful operation
+			 *         content:
+			 *           application/json:
+			 *             schema:
+			 *               type: object
+			 *               properties:
+			 *                 id:
+			 *                   type: integer
+			 *                   format: int32
+			 */
 			.post((req, res) => {
 				const employeeId = service.add(req.body);
 				res.json({ id: employeeId });
