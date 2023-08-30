@@ -5,10 +5,11 @@
 	"type": "module",
 	"scripts": {
 		"serve": "node src/index.js",
-		"monitor": "nodemon src/index.js --watch src"
+		"monitor": "nodemon  "
 	},
 	"dependencies": {
 		"dotenv": "^16.3.1",
+		"ejs": "^3.1.9",
 		"express": "^4.18.2",
 		"express-openapi-validator": "^5.0.6",
 		"swagger-ui-express": "^5.0.0"

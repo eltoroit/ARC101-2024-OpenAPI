@@ -15,6 +15,7 @@ export default class Webserver {
 	async createServer() {
 		this.app = express();
 		this.app.use(express.json());
+		this.app.set("view engine", "ejs");
 
 		// The order of this is critical
 		this._01DefineBasicRoutes();
@@ -27,6 +28,17 @@ export default class Webserver {
 
 	_01DefineBasicRoutes() {
 		// Webservice tester
+		this.app.get("/", (req, res) =>
+			res.render("pages/home", {
+				title: "TITLE123",
+				dttm: new Date(),
+				pages: [
+					{ label: "DTTM", url: "/dttm" },
+					{ label: "API Docs", url: "/api-docs" },
+					{ label: "JSON", url: "/swagger.json" },
+				],
+			})
+		);
 		this.app.get("/dttm", (req, res) => res.json({ date: new Date() }));
 
 		// HTML page for OpenAPI

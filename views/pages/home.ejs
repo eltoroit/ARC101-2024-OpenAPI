@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%- include('../partials/head', {title}); %>
+	</head>
+	<body>
+		<ul>
+			<% for(let i = 0; i < pages.length; i++) { %>
+			<!--  -->
+			<li><a href="<%= pages[i].url%>" target="_blank"><%=pages[i].label%></a></li>
+			<%} %>
+		</ul>
+		<%= dttm %>
+	</body>
+</html>
