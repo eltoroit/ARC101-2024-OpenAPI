@@ -2,6 +2,7 @@
 
 import express from "express";
 import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 import openApiValidator from "express-openapi-validator";
 import { EmployeesService } from "./services/employees-service.js";
 import { EmployeesController } from "./controllers/employees-controller.js";
@@ -10,6 +11,7 @@ const app = express();
 const port = 3000;
 
 app.get("/swagger.json", (_req, res) => res.json(apiSpec));
+
 app.use(express.json());
 
 const swaggerJsDocOptions = {
@@ -24,6 +26,8 @@ const swaggerJsDocOptions = {
 	apis: ["./src/controllers/*.js"],
 };
 const apiSpec = swaggerJsDoc(swaggerJsDocOptions);
+// app.use("/swagger", swaggerUi.serve, swaggerUi.setup(apiSpec));
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(null, { swaggerOptions: { url: "/swagger.json" } }));
 
 app.use(
 	openApiValidator.middleware({
