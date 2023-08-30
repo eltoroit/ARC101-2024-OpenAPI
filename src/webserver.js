@@ -26,8 +26,13 @@ export default class Webserver {
 	}
 
 	_01DefineBasicRoutes() {
+		// Webservice tester
 		this.app.get("/dttm", (req, res) => res.json({ date: new Date() }));
+
+		// HTML page for OpenAPI
 		this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+		// JSON page for OpenAPI
 		this.app.get("/swagger.json", (_req, res) => res.json(swaggerDocument));
 	}
 
