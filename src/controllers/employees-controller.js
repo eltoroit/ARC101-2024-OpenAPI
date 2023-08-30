@@ -129,9 +129,9 @@ export class EmployeesController {
 		 */
 		app.get(
 			"/employees/:employeeId",
-			asyncHandler(async (req, res) => {
+			asyncHandler((req, res) => {
 				try {
-					res.json(await service.get(+req.params.employeeId));
+					res.json(service.get(req.params.employeeId));
 				} catch (error) {
 					if (error instanceof EmployeeNotFoundError) throw new ExpressError(404, error.message);
 					throw error;
@@ -161,6 +161,10 @@ export class EmployeesController {
 		 *     responses:
 		 *       "200":
 		 *         description: successful operation
+		 *         content:
+		 *           application/json:
+		 *             schema:
+		 *               $ref: "#/components/schemas/Employee"
 		 *       "404":
 		 *         description: Employee not found
 		 *         content:
@@ -170,8 +174,7 @@ export class EmployeesController {
 		 */
 		app.put("/employees/:employeeId", (req, res) => {
 			try {
-				service.update(+req.params.employeeId, req.body);
-				res.sendStatus(200);
+				res.json(service.update(req.params.employeeId, req.body));
 			} catch (error) {
 				if (error instanceof EmployeeNotFoundError) throw new ExpressError(404, error.message);
 				throw error;
@@ -198,7 +201,7 @@ export class EmployeesController {
 		 */
 		app.delete("/employees/:employeeId", (req, res) => {
 			try {
-				service.delete(+req.params.employeeId);
+				service.delete(req.params.employeeId);
 				res.sendStatus(200);
 			} catch (error) {
 				if (error instanceof EmployeeNotFoundError) throw new ExpressError(404, error.message);
