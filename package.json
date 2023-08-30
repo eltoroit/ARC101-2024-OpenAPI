@@ -4,8 +4,8 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"run": "node src/server.js",
-		"run:watch": "nodemon src/server.js --watch src",
+		"run": "node src/index.js",
+		"run:watch": "nodemon src/index.js --watch src",
 		"start": "npm run run:watch"
 	},
 	"other": {
@@ -26,7 +26,8 @@
 		"express": "^4.18.1",
 		"express-openapi-validator": "^5.0.6",
 		"swagger-jsdoc": "^6.2.8",
-		"swagger-ui-express": "^5.0.0"
+		"swagger-ui-express": "^5.0.0",
+		"dotenv": "^16.1.3"
 	},
 	"devDependencies": {
 		"nodemon": "^3.0.1"
