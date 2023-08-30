@@ -3,7 +3,7 @@
 import express from "express";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import openApiValidator from "express-openapi-validator";
+import OpenApiValidator from "express-openapi-validator";
 import { EmployeesService } from "./services/employees-service.js";
 import { EmployeesController } from "./controllers/employees-controller.js";
 
@@ -18,19 +18,19 @@ const swaggerJsDocOptions = {
 	definition: {
 		openapi: "3.0.0",
 		info: {
-			title: "Employees API",
+			title: "Northwind",
 			version: "1.0.0",
-			description: "A REST service for managing an employees data store.",
+			description: "A simple REST API for providing basic CRUD-access to the employees in a Northwind database.",
 		},
 	},
-	apis: ["./src/controllers/*.js"],
+	apis: ["./src/controllers/*.js", "./src/express-error.js"],
 };
 const apiSpec = swaggerJsDoc(swaggerJsDocOptions);
-// app.use("/swagger", swaggerUi.serve, swaggerUi.setup(apiSpec));
+
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(null, { swaggerOptions: { url: "/swagger.json" } }));
 
 app.use(
-	openApiValidator.middleware({
+	OpenApiValidator.middleware({
 		apiSpec,
 		validateRequests: true,
 		validateResponses: true,
