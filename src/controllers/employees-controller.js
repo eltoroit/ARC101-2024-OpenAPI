@@ -1,6 +1,3 @@
-import express from "express";
-import { EmployeesDB } from "../services/employees-database.js";
-
 export class EmployeesController {
 	static registerRoutes(app, service) {
 		app.get("/employees", (_req, res) => res.json(service.getAll()));
