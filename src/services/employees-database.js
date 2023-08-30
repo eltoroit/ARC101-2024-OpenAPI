@@ -1,8 +1,6 @@
 "use strict";
 
-import { EmployeeNotFoundError } from "./employee-not-found-error.js";
-
-export class EmployeesService {
+export class EmployeesDB {
 	employees = [
 		{
 			id: 0,
@@ -23,8 +21,9 @@ export class EmployeesService {
 	}
 
 	get(employeeId) {
+		employeeId = +employeeId;
 		const employee = this.employees.find((e) => e.id === employeeId);
-		if (!employee) throw new EmployeeNotFoundError(employeeId);
+		if (!employee) throw new Error(`Employee with ID ${employeeId} not found (1)`);
 		return employee;
 	}
 
@@ -41,6 +40,7 @@ export class EmployeesService {
 	}
 
 	update(employeeId, employeeDetailsToUpdate) {
+		employeeId = +employeeId;
 		const employeeIndex = this._findEmployeeById(employeeId);
 		this.employees[employeeIndex] = {
 			...this.employees[employeeIndex],
@@ -50,14 +50,16 @@ export class EmployeesService {
 	}
 
 	delete(employeeId) {
+		employeeId = +employeeId;
 		const employeeIndex = this._findEmployeeById(employeeId);
 		this.employees.splice(employeeIndex, 1);
 		return { deleted: employeeId };
 	}
 
 	_findEmployeeById(employeeId) {
+		employeeId = +employeeId;
 		const employeeIndex = this.employees.findIndex((e) => e.id === employeeId);
-		if (employeeIndex === -1) throw new EmployeeNotFoundError(employeeId);
+		if (employeeIndex === -1) throw new Error(`Employee with ID ${employeeId} not found (2)`);
 		return employeeIndex;
 	}
 }

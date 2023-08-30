@@ -1,44 +1,28 @@
 "use strict";
 
 import express from "express";
-import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import OpenApiValidator from "express-openapi-validator";
-import { EmployeesService } from "./services/employees-service.js";
+import { EmployeesDB } from "./services/employees-database.js";
 import { EmployeesController } from "./controllers/employees-controller.js";
+import swaggerDocument from "./controllers/employees-controller.json" assert { type: "json" };
 
 const app = express();
 const port = 3000;
 
-app.get("/swagger.json", (_req, res) => res.json(apiSpec));
-
+app.get("/swagger.json", (_req, res) => res.json(swaggerDocument));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.json());
-
-const swaggerJsDocOptions = {
-	definition: {
-		openapi: "3.0.0",
-		info: {
-			title: "Northwind",
-			version: "1.0.0",
-			description: "A simple REST API for providing basic CRUD-access to the employees in a Northwind database.",
-		},
-	},
-	apis: ["./src/controllers/*.js", "./src/express-error.js"],
-};
-const apiSpec = swaggerJsDoc(swaggerJsDocOptions);
-
-app.use("/swagger", swaggerUi.serve, swaggerUi.setup(null, { swaggerOptions: { url: "/swagger.json" } }));
 
 app.use(
 	OpenApiValidator.middleware({
-		apiSpec,
-		validateRequests: true,
-		validateResponses: true,
+		apiSpec: swaggerDocument,
+		validateRequests: true, // (default)
+		validateResponses: true, // false by default
 	})
 );
 
-EmployeesController.registerRoutes(app, new EmployeesService());
-
+EmployeesController.registerRoutes(app, new EmployeesDB());
 app.use((err, _req, res, _next) => {
 	console.error(err);
 	res.status(err.status || 500).json({
