@@ -30,7 +30,7 @@ export default class Webserver {
 		// Webservice tester
 		this.app.get("/", (req, res) =>
 			res.render("pages/home", {
-				title: "TITLE123",
+				title: "ARC101 Demo Web App",
 				dttm: new Date(),
 				pages: [
 					{ label: "DTTM", url: "/dttm" },
