@@ -34,18 +34,18 @@ export default class Webserver {
 				dttm: new Date(),
 				pages: [
 					{ label: "DTTM", url: "/dttm" },
-					{ label: "API Docs", url: "/api-docs" },
-					{ label: "JSON", url: "/swagger.json" },
+					{ label: "API Docs", url: "/openApi" },
+					{ label: "JSON", url: "/openApi.json" },
 				],
 			})
 		);
 		this.app.get("/dttm", (req, res) => res.json({ date: new Date() }));
 
 		// HTML page for OpenAPI
-		this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+		this.app.use("/openApi", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 		// JSON page for OpenAPI
-		this.app.get("/swagger.json", (_req, res) => res.json(swaggerDocument));
+		this.app.get("/openApi.json", (_req, res) => res.json(swaggerDocument));
 	}
 
 	_02InitializeValidatorMiddleware() {
