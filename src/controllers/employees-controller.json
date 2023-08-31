@@ -15,7 +15,7 @@
 						"type": "integer",
 						"format": "int32"
 					},
-					"fistName": {
+					"firstName": {
 						"type": "string"
 					},
 					"lastName": {
