@@ -28,7 +28,8 @@ export default class Webserver {
 
 	_01DefineBasicRoutes() {
 		// Webservice tester
-		this.app.get("/", (req, res) =>
+		this.app.get("/", (req, res) => {
+			console.log(`${new Date().toJSON()} GET: /`);
 			res.render("pages/home", {
 				title: "ARC101 Demo Web App",
 				dttm: new Date(),
@@ -37,15 +38,29 @@ export default class Webserver {
 					{ label: "API Docs", url: "/openApi" },
 					{ label: "JSON", url: "/openApi.json" },
 				],
-			})
-		);
-		this.app.get("/dttm", (req, res) => res.json({ date: new Date() }));
+			});
+		});
+		this.app.get("/dttm", (req, res) => {
+			console.log(`${new Date().toJSON()} GET: /dttm`);
+			res.json({ date: new Date() });
+		});
+		this.app.get("/favicon.ico", (req, res) => {
+			// 	const favicon = path.join(__dirname, "public", "favicon.ico");
+			// 	res.statusCode = 200;
+			// 	res.setHeader("Content-Type", "image/x-icon");
+			// 	fs.createReadStream(favicon).pipe(res);
+			console.log(`${new Date().toJSON()} GET: /favicon.ico`);
+			res.status(204).end();
+		});
 
 		// HTML page for OpenAPI
 		this.app.use("/openApi", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 		// JSON page for OpenAPI
-		this.app.get("/openApi.json", (_req, res) => res.json(swaggerDocument));
+		this.app.get("/openApi.json", (_req, res) => {
+			console.log(`${new Date().toJSON()} GET: /openApi.json`);
+			res.json(swaggerDocument);
+		});
 	}
 
 	_02InitializeValidatorMiddleware() {
