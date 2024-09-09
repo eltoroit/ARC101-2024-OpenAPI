@@ -14,6 +14,7 @@ class PublicKeyEncryption {
 	// P: 83, G: 2
 	// P: 83, G: 2
 	// P: 113, G: 3
+	// P: 1009, G: 11
 	PUBLIC = {
 		// P | Base | Prime number
 		P_Base: 17,

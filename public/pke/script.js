@@ -1,5 +1,13 @@
+import { BigNumber } from "https://cdn.jsdelivr.net/npm/bignumber.js@9.1.2/bignumber.min.mjs";
 export default class InputHandler {
 	values = {};
+
+	constructor() {
+		this.values = {
+			p2Prime: 1009,
+			p2Generator: 11,
+		};
+	}
 
 	changedInput(name) {
 		const input = document.getElementById(name);
@@ -7,8 +15,13 @@ export default class InputHandler {
 		const error = document.getElementById(`${name}.error`);
 		const number = Number(input.value);
 
-		document.getElementById("g1Encrypt").disabled = true;
-		document.getElementById("g1Decrypt").disabled = true;
+		if (name[1] === 1) {
+			document.getElementById("g1Encrypt").disabled = true;
+			document.getElementById("g1Decrypt").disabled = true;
+		} else {
+			document.getElementById("g2GenerateP1_PN").disabled = true;
+			// document.getElementById("g1Decrypt").disabled = true;
+		}
 
 		if (input.validity.valueMissing) {
 			error.textContent = "This field is required.";
@@ -35,6 +48,9 @@ export default class InputHandler {
 		if (name === "g1EncryptedValue") {
 			document.getElementById("g1Decrypt").disabled = false;
 		}
+		if (name === "g2P1_PRIVATE") {
+			document.getElementById("g2GenerateP1_PN").disabled = false;
+		}
 	}
 
 	async g1Encrypt() {
@@ -42,9 +58,7 @@ export default class InputHandler {
 		const msg = `Please share this value: ${encrypted.toLocaleString()}`;
 		document.getElementById("g1EncryptedResult").value = msg;
 		await navigator.clipboard.writeText(encrypted);
-		setTimeout(() => {
-			alert(msg);
-		}, 10);
+		alert(msg);
 	}
 
 	g1Decrypt() {
@@ -54,5 +68,11 @@ export default class InputHandler {
 		setTimeout(() => {
 			alert(msg);
 		}, 10);
+	}
+
+	g2GenerateP1_PN() {
+		let bn = new BigNumber(3);
+		console.log(bn);
+		debugger;
 	}
 }
