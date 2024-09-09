@@ -11,8 +11,8 @@
 
 			// Add event listener to the button
 			document.getElementById("g1SharedKey").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1SharedKey"));
-			document.getElementById("g1GuardedValue").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1GuardedValue"));
-			document.getElementById("g1EncryptedValue").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1EncryptedValue"));
+			document.getElementById("g1Decrypted").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1Decrypted"));
+			document.getElementById("g1Encrypted").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1Encrypted"));
 			document.getElementById("g1Encrypt").addEventListener("click", inputHandler.g1Encrypt.bind(inputHandler));
 			document.getElementById("g1Decrypt").addEventListener("click", inputHandler.g1Decrypt.bind(inputHandler));
 		</script>
@@ -20,10 +20,24 @@
 	<body>
 		<div class="slds-m-horizontal_small">
 			<div class="slds-align_absolute-center">
-				<div class="slds-text-heading_large">Encryption Games - Game #1</div>
+				<div class="slds-text-heading_large">Encryption Games - Game #2</div>
 			</div>
 			<div>
 				<table>
+					<tr>
+						<td>
+							<!-- Prime Number -->
+							<div id="g2PrimeNamber" class="slds-form-element">
+								<label class="slds-form-element__label" for="g1DecryptedResult">
+									<abbr class="slds-required" title="required">* </abbr>
+									Guarded Value ( 2-digit number):
+								</label>
+								<div class="slds-form-element__control">
+									<input id="g1DecryptedResult" type="text" readonly disabled required class="slds-input" />
+								</div>
+							</div>
+						</td>
+					</tr>
 					<tr>
 						<td colspan="2">
 							<!-- P1: Shared Secret (3-digits number) -->
@@ -35,7 +49,7 @@
 								<div class="slds-form-element__control">
 									<input type="number" id="g1SharedKey" min="100" max="999" required class="slds-input" />
 								</div>
-								<div class="slds-form-element__help" style="text-align: left" id="g1SharedKey.error"></div>
+								<div class="slds-form-element__help" id="g1SharedKey.error"></div>
 							</div>
 						</td>
 					</tr>
@@ -56,22 +70,22 @@
 					<tr>
 						<td>
 							<!-- P1: Guarded Value ( 2-digit number) -->
-							<div id="g1GuardedValue.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g1GuardedValue">
+							<div id="g1Decrypted.div" class="slds-form-element">
+								<label class="slds-form-element__label" for="g1Decrypted">
 									<abbr class="slds-required" title="required">* </abbr>
 									Guarded Value ( 2-digit number):
 								</label>
 								<div class="slds-form-element__control">
-									<input id="g1GuardedValue" type="number" min="10" max="99" required class="slds-input" />
+									<input id="g1Decrypted" type="number" min="10" max="99" required class="slds-input" />
 								</div>
-								<div id="g1GuardedValue.error" class="slds-form-element__help" style="text-align: left"></div>
+								<div id="g1Decrypted.error" class="slds-form-element__help"></div>
 							</div>
 
 							<!-- Button to encrypt -->
 							<button id="g1Encrypt" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Encrypt</button>
 
 							<!-- P1: Encrypted Result -->
-							<div id="g1EncryptedResult.div" class="slds-form-element" style="text-align: left">
+							<div id="g1Encrypted.Result" class="slds-form-element">
 								<label class="slds-form-element__label" for="g1EncryptedResult">
 									<abbr class="slds-required" title="required">* </abbr>
 									Encrypted Result:
@@ -83,28 +97,28 @@
 						</td>
 						<td>
 							<!-- P1: Encrypted Result -->
-							<div id="g1EncryptedValue.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g1EncryptedValue">
+							<div id="g1Encrypted.div" class="slds-form-element">
+								<label class="slds-form-element__label" for="g1Encrypted">
 									<abbr class="slds-required" title="required">* </abbr>
 									Encrypted Result:
 								</label>
 								<div class="slds-form-element__control">
-									<input id="g1EncryptedValue" type="number" min="1000" max="98901" required class="slds-input" />
+									<input id="g1Encrypted" type="number" min="1000" max="98901" required class="slds-input" />
 								</div>
-								<div id="g1EncryptedValue.error" class="slds-form-element__help" style="text-align: left"></div>
+								<div id="g1Encrypted.error" class="slds-form-element__help"></div>
 							</div>
 
 							<!-- Button to encrypt -->
 							<button id="g1Decrypt" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Decrypt</button>
 
 							<!-- P1: Guarded Value ( 2-digit number) -->
-							<div id="g1GuardedValueResult.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g1GuardedValueResult">
+							<div id="g1DecryptedResult.div" class="slds-form-element">
+								<label class="slds-form-element__label" for="g1DecryptedResult">
 									<abbr class="slds-required" title="required">* </abbr>
 									Guarded Value ( 2-digit number):
 								</label>
 								<div class="slds-form-element__control">
-									<input id="g1GuardedValueResult" type="text" readonly disabled required class="slds-input" />
+									<input id="g1DecryptedResult" type="text" readonly disabled required class="slds-input" />
 								</div>
 							</div>
 						</td>

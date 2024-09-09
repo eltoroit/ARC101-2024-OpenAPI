@@ -29,16 +29,16 @@ export default class InputHandler {
 		div.classList.remove("slds-has-error");
 		this.values[name] = number;
 
-		if (name === "g1Decrypted") {
+		if (name === "g1GuardedValue") {
 			document.getElementById("g1Encrypt").disabled = false;
 		}
-		if (name === "g1Encrypted") {
+		if (name === "g1EncryptedValue") {
 			document.getElementById("g1Decrypt").disabled = false;
 		}
 	}
 
 	async g1Encrypt() {
-		const encrypted = this.values.g1Decrypted * this.values.g1SharedSecret;
+		const encrypted = this.values.g1GuardedValue * this.values.g1SharedKey;
 		const msg = `Please share this value: ${encrypted.toLocaleString()}`;
 		document.getElementById("g1EncryptedResult").value = msg;
 		await navigator.clipboard.writeText(encrypted);
@@ -48,9 +48,9 @@ export default class InputHandler {
 	}
 
 	g1Decrypt() {
-		const decrypted = this.values.g1Encrypted / this.values.g1SharedSecret;
+		const decrypted = this.values.g1EncryptedValue / this.values.g1SharedKey;
 		const msg = `Please share this value: ${decrypted.toLocaleString()}`;
-		document.getElementById("g1DecryptedResult").value = msg;
+		document.getElementById("g1GuardedValueResult").value = msg;
 		setTimeout(() => {
 			alert(msg);
 		}, 10);

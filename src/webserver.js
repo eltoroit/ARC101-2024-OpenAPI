@@ -45,6 +45,7 @@ export default class Webserver {
 					{ label: "API Docs", url: "/openApi" },
 					{ label: "JSON", url: "/openApi.json" },
 					{ label: "Encryption Games - Game #1", url: "/encryptionGamesGame1" },
+					{ label: "Encryption Games - Game #2", url: "/encryptionGamesGame2" },
 				],
 			});
 		});
@@ -56,6 +57,13 @@ export default class Webserver {
 			console.log(`${new Date().toJSON()} GET: /encryptionGamesGame1`);
 			res.render("pages/encryptionGamesGame1", {
 				title: "Encryption Games Calculator - Game #1",
+				dttm: new Date(),
+			});
+		});
+		this.app.get("/encryptionGamesGame2", (req, res) => {
+			console.log(`${new Date().toJSON()} GET: /encryptionGamesGame2`);
+			res.render("pages/encryptionGamesGame2", {
+				title: "Encryption Games Calculator - Game #2",
 				dttm: new Date(),
 			});
 		});
