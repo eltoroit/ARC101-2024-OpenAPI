@@ -5,7 +5,7 @@
 		"version": "1.0",
 		"description": "A simple REST API for providing basic CRUD-access to the employees in a dummy database."
 	},
-	"servers": [{ "url": "http://localhost:3000" }, { "url": "https://et-arc-101-71454c229217.herokuapp.com" }],
+	"servers": [{ "url": "http://localhost:3000" }, { "url": "https://et-arc101-2024-3b801cca8f46.herokuapp.com/openApi/" }],
 	"components": {
 		"schemas": {
 			"Employee": {

@@ -1,7 +1,9 @@
 "use strict";
 
 import http from "http";
+import path from "path";
 import express from "express";
+import { fileURLToPath } from "url";
 import swaggerUi from "swagger-ui-express";
 import { EmployeesDB } from "./db/employees.js";
 import OpenApiValidator from "express-openapi-validator";
@@ -13,8 +15,13 @@ export default class Webserver {
 	port;
 
 	async createServer() {
+		const __filename = fileURLToPath(import.meta.url);
+		const __dirname = path.dirname(__filename);
+
 		this.app = express();
 		this.app.use(express.json());
+		this.app.use(express.static(path.join(__dirname, "../public")));
+		this.app.set("views", path.join(__dirname, "../views"));
 		this.app.set("view engine", "ejs");
 
 		// The order of this is critical
@@ -37,12 +44,20 @@ export default class Webserver {
 					{ label: "DTTM", url: "/dttm" },
 					{ label: "API Docs", url: "/openApi" },
 					{ label: "JSON", url: "/openApi.json" },
+					{ label: "Encryption Games", url: "/encryptionGames" },
 				],
 			});
 		});
 		this.app.get("/dttm", (req, res) => {
 			console.log(`${new Date().toJSON()} GET: /dttm`);
 			res.json({ date: new Date() });
+		});
+		this.app.get("/encryptionGames", (req, res) => {
+			console.log(`${new Date().toJSON()} GET: /encryptionGames`);
+			res.render("pages/encryptionGames", {
+				title: "Encryption Games Calculator",
+				dttm: new Date(),
+			});
 		});
 		this.app.get("/favicon.ico", (req, res) => {
 			// 	const favicon = path.join(__dirname, "public", "favicon.ico");
