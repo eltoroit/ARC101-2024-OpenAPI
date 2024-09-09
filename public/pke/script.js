@@ -7,6 +7,9 @@ export default class InputHandler {
 		const error = document.getElementById(`${name}.error`);
 		const number = Number(input.value);
 
+		document.getElementById("g1Encrypt").disabled = true;
+		document.getElementById("g1Decrypt").disabled = true;
+
 		if (input.validity.valueMissing) {
 			error.textContent = "This field is required.";
 			input.classList.add("invalid");
@@ -25,12 +28,29 @@ export default class InputHandler {
 		input.classList.remove("invalid");
 		div.classList.remove("slds-has-error");
 		this.values[name] = number;
+
+		if (name === "g1Decrypted") {
+			document.getElementById("g1Encrypt").disabled = false;
+		}
+		if (name === "g1Encrypted") {
+			document.getElementById("g1Decrypt").disabled = false;
+		}
 	}
 
-	g1Encrypt() {
-		const encrypted = this.values.g1SharedSecret * this.values.g1Value;
+	async g1Encrypt() {
+		const encrypted = this.values.g1Decrypted * this.values.g1SharedSecret;
 		const msg = `Please share this value: ${encrypted.toLocaleString()}`;
-		document.getElementById("g1Encrypted").value = msg;
+		document.getElementById("g1EncryptedResult").value = msg;
+		await navigator.clipboard.writeText(encrypted);
+		setTimeout(() => {
+			alert(msg);
+		}, 10);
+	}
+
+	g1Decrypt() {
+		const decrypted = this.values.g1Encrypted / this.values.g1SharedSecret;
+		const msg = `Please share this value: ${decrypted.toLocaleString()}`;
+		document.getElementById("g1DecryptedResult").value = msg;
 		setTimeout(() => {
 			alert(msg);
 		}, 10);

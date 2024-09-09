@@ -44,7 +44,7 @@ export default class Webserver {
 					{ label: "DTTM", url: "/dttm" },
 					{ label: "API Docs", url: "/openApi" },
 					{ label: "JSON", url: "/openApi.json" },
-					{ label: "Encryption Games", url: "/encryptionGames" },
+					{ label: "Encryption Games - Game #1", url: "/encryptionGamesGame1" },
 				],
 			});
 		});
@@ -52,10 +52,10 @@ export default class Webserver {
 			console.log(`${new Date().toJSON()} GET: /dttm`);
 			res.json({ date: new Date() });
 		});
-		this.app.get("/encryptionGames", (req, res) => {
-			console.log(`${new Date().toJSON()} GET: /encryptionGames`);
-			res.render("pages/encryptionGames", {
-				title: "Encryption Games Calculator",
+		this.app.get("/encryptionGamesGame1", (req, res) => {
+			console.log(`${new Date().toJSON()} GET: /encryptionGamesGame1`);
+			res.render("pages/encryptionGamesGame1", {
+				title: "Encryption Games Calculator - Game #1",
 				dttm: new Date(),
 			});
 		});

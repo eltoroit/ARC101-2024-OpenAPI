@@ -1,0 +1,15 @@
+table {
+    border: 1px solid black !important;
+    /* border-spacing: 10px !important; */
+    /* Space between cells */
+    /* border-collapse: separate !important; */
+    /* Ensure spacing is applied */
+}
+
+td,
+th {
+    border: 1px solid black !important;
+    text-align: center !important;
+    padding: 10px !important;
+    /* Space inside cells */
+}
