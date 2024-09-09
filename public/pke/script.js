@@ -4,8 +4,8 @@ export default class InputHandler {
 
 	constructor() {
 		this.values = {
-			p2Prime: 1009,
-			p2Generator: 11,
+			g2Prime: 1009,
+			g2Generator: 11,
 		};
 	}
 
@@ -20,7 +20,9 @@ export default class InputHandler {
 			document.getElementById("g1Decrypt").disabled = true;
 		} else {
 			document.getElementById("g2GenerateP1_PN").disabled = true;
-			// document.getElementById("g1Decrypt").disabled = true;
+			document.getElementById("g2GenerateP2_PN").disabled = true;
+			document.getElementById("g2GenerateP1Secret").disabled = true;
+			document.getElementById("g2GenerateP2Secret").disabled = true;
 		}
 
 		if (input.validity.valueMissing) {
@@ -42,23 +44,38 @@ export default class InputHandler {
 		div.classList.remove("slds-has-error");
 		this.values[name] = number;
 
-		if (name === "g1GuardedValue") {
-			document.getElementById("g1Encrypt").disabled = false;
-		}
-		if (name === "g1EncryptedValue") {
-			document.getElementById("g1Decrypt").disabled = false;
-		}
-		if (name === "g2P1_PRIVATE") {
-			document.getElementById("g2GenerateP1_PN").disabled = false;
+		switch (name) {
+			case "g1GuardedValue":
+				document.getElementById("g1Encrypt").disabled = false;
+				break;
+			case "g1EncryptedValue":
+				document.getElementById("g1Decrypt").disabled = false;
+				break;
+			case "g2P1_PRIVATE":
+				document.getElementById("g2GenerateP1_PN").disabled = false;
+				break;
+			case "g2P2_PRIVATE":
+				document.getElementById("g2GenerateP2_PN").disabled = false;
+				break;
+			case "g2P1_P2_PN":
+				document.getElementById("g2GenerateP1Secret").disabled = false;
+				break;
+			case "g2P2_P1_PN":
+				document.getElementById("g2GenerateP2Secret").disabled = false;
+				break;
+			default:
+				break;
 		}
 	}
 
-	async g1Encrypt() {
+	#delay = 100;
+	g1Encrypt() {
 		const encrypted = this.values.g1GuardedValue * this.values.g1SharedKey;
 		const msg = `Please share this value: ${encrypted.toLocaleString()}`;
 		document.getElementById("g1EncryptedResult").value = msg;
-		await navigator.clipboard.writeText(encrypted);
-		alert(msg);
+		setTimeout(() => {
+			alert(msg);
+		}, this.#delay);
 	}
 
 	g1Decrypt() {
@@ -67,12 +84,43 @@ export default class InputHandler {
 		document.getElementById("g1GuardedValueResult").value = msg;
 		setTimeout(() => {
 			alert(msg);
-		}, 10);
+		}, this.#delay);
 	}
 
 	g2GenerateP1_PN() {
-		let bn = new BigNumber(3);
-		console.log(bn);
-		debugger;
+		const P1_PN = this.#expMod({ base: this.values.g2Generator, privKey: this.values.g2P1_PRIVATE }); // g^P1_PRIVATE mod p
+		const msg = `Please share this value: ${P1_PN.toLocaleString()}`;
+		document.getElementById("g2P1_PN").value = msg;
+		setTimeout(() => {
+			alert(msg);
+		}, this.#delay);
+	}
+
+	g2GenerateP2_PN() {
+		const P2_PN = this.#expMod({ base: this.values.g2Generator, privKey: this.values.g2P2_PRIVATE }); // g^P2_PRIVATE mod p
+		const msg = `Please share this value: ${P2_PN.toLocaleString()}`;
+		document.getElementById("g2P2_PN").value = msg;
+		setTimeout(() => {
+			alert(msg);
+		}, this.#delay);
+	}
+
+	g2GenerateP1Secret() {
+		const p1Secret = this.#expMod({ base: this.values.g2P1_P2_PN, privKey: this.values.g2P1_PRIVATE });
+		const msg = `SECRET: ${p1Secret.toLocaleString()}`;
+		document.getElementById("g2P1Secret").value = msg;
+	}
+
+	g2GenerateP2Secret() {
+		const p2Secret = this.#expMod({ base: this.values.g2P2_P1_PN, privKey: this.values.g2P2_PRIVATE });
+		const msg = `SECRET: ${p2Secret.toLocaleString()}`;
+		document.getElementById("g2P2Secret").value = msg;
+	}
+
+	#expMod({ base, privKey }) {
+		const bnBase = new BigNumber(base);
+		const bnPOWER = bnBase.exponentiatedBy(privKey);
+		const bnPN = bnPOWER.modulo(this.values.g2Prime); // base^PRIVATE mod p
+		return bnPN.toNumber();
 	}
 }

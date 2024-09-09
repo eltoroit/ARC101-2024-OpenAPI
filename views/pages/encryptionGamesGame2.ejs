@@ -8,15 +8,20 @@
 			import InputHandler from "./PKE/script.js";
 
 			const inputHandler = new InputHandler();
-			document.getElementById("p2Prime").value = inputHandler.values.p2Prime;
-			document.getElementById("p2Generator").value = inputHandler.values.p2Generator;
+			document.getElementById("p2Prime").value = inputHandler.values.g2Prime;
+			document.getElementById("p2Generator").value = inputHandler.values.g2Generator;
 
 			// Add event listener to the button
+			// Step 1
 			document.getElementById("g2P1_PRIVATE").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g2P1_PRIVATE"));
 			document.getElementById("g2GenerateP1_PN").addEventListener("click", inputHandler.g2GenerateP1_PN.bind(inputHandler));
-			// document.getElementById("g1GuardedValue").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1GuardedValue"));
-			// document.getElementById("g1EncryptedValue").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1EncryptedValue"));
-			// document.getElementById("g1Decrypt").addEventListener("click", inputHandler.g1Decrypt.bind(inputHandler));
+			document.getElementById("g2P2_PRIVATE").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g2P2_PRIVATE"));
+			document.getElementById("g2GenerateP2_PN").addEventListener("click", inputHandler.g2GenerateP2_PN.bind(inputHandler));
+			// Step 2
+			document.getElementById("g2P1_P2_PN").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g2P1_P2_PN"));
+			document.getElementById("g2GenerateP1Secret").addEventListener("click", inputHandler.g2GenerateP1Secret.bind(inputHandler));
+			document.getElementById("g2P2_P1_PN").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g2P2_P1_PN"));
+			document.getElementById("g2GenerateP2Secret").addEventListener("click", inputHandler.g2GenerateP2Secret.bind(inputHandler));
 		</script>
 	</head>
 	<body>
@@ -27,7 +32,7 @@
 			<div>
 				<table>
 					<tr>
-						<td>
+						<td colspan="2">
 							<!-- P: Prime value -->
 							<div id="p2Prime.div" class="slds-form-element" style="text-align: left">
 								<label class="slds-form-element__label" for="p2Prime"> Prime Value: </label>
@@ -47,13 +52,13 @@
 						</td>
 					</tr>
 					<tr>
-						<th>
+						<th colspan="2">
 							<!-- Player 1 -->
 							<div class="slds-align_absolute-center">
 								<div class="slds-text-heading_small slds-m-vertical_xx-small">Player 1</div>
 							</div>
 						</th>
-						<th>
+						<th colspan="2">
 							<!-- Player 2 -->
 							<div class="slds-align_absolute-center">
 								<div class="slds-text-heading_small slds-m-vertical_xx-small">Player 2</div>
@@ -61,8 +66,9 @@
 						</th>
 					</tr>
 					<tr>
+						<th class="vertical-text">Step #1</th>
 						<td>
-							<!-- P1: P1_PRIVATE ( 2-digit number) -->
+							<!-- P1_PRIVATE ( 2-digit number) -->
 							<div id="g2P1_PRIVATE.div" class="slds-form-element" style="text-align: left">
 								<label class="slds-form-element__label" for="g2P1_PRIVATE">
 									<abbr class="slds-required" title="required">* </abbr>
@@ -77,7 +83,7 @@
 							<!-- Button to Generate P1_PN -->
 							<button id="g2GenerateP1_PN" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Generate P1_PN</button>
 
-							<!-- P1: P1_PN -->
+							<!-- P1_PN -->
 							<div id="g2P1_PN.div" class="slds-form-element" style="text-align: left">
 								<label class="slds-form-element__label" for="g2P1_PN">
 									<abbr class="slds-required" title="required">* </abbr>
@@ -89,29 +95,86 @@
 							</div>
 						</td>
 						<td>
-							<!-- P1: Encrypted Result -->
-							<div id="g1EncryptedValue.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g1EncryptedValue">
+							<!-- P2_PRIVATE ( 2-digit number) -->
+							<div id="g2P2_PRIVATE.div" class="slds-form-element" style="text-align: left">
+								<label class="slds-form-element__label" for="g2P2_PRIVATE">
 									<abbr class="slds-required" title="required">* </abbr>
-									Encrypted Result:
+									P2_PRIVATE ( 2-digit number):
 								</label>
 								<div class="slds-form-element__control">
-									<input id="g1EncryptedValue" type="number" min="1000" max="98901" required class="slds-input" />
+									<input id="g2P2_PRIVATE" type="number" min="10" max="99" required class="slds-input" />
 								</div>
-								<div id="g1EncryptedValue.error" class="slds-form-element__help" style="text-align: left"></div>
+								<div id="g2P2_PRIVATE.error" class="slds-form-element__help" style="text-align: left"></div>
 							</div>
 
-							<!-- Button to encrypt -->
-							<button id="g1Decrypt" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Decrypt</button>
+							<!-- Button to Generate P2_PN -->
+							<button id="g2GenerateP2_PN" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Generate P2_PN</button>
 
-							<!-- P1: Guarded Value ( 2-digit number) -->
-							<div id="g1GuardedValueResult.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g1GuardedValueResult">
+							<!-- P2_PN -->
+							<div id="g2P2_PN.div" class="slds-form-element" style="text-align: left">
+								<label class="slds-form-element__label" for="g2P2_PN">
 									<abbr class="slds-required" title="required">* </abbr>
-									Guarded Value ( 2-digit number):
+									P2_PN:
 								</label>
 								<div class="slds-form-element__control">
-									<input id="g1GuardedValueResult" type="text" readonly disabled required class="slds-input" />
+									<input id="g2P2_PN" type="text" readonly disabled required class="slds-input" />
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th class="vertical-text">Step #2</th>
+						<td>
+							<!-- P1_P2_PN -->
+							<div id="g2P1_P2_PN.div" class="slds-form-element" style="text-align: left">
+								<label class="slds-form-element__label" for="g2P1_P2_PN">
+									<abbr class="slds-required" title="required">* </abbr>
+									P2_PN
+								</label>
+								<div class="slds-form-element__control">
+									<input id="g2P1_P2_PN" type="number" min="1" max="1006" required class="slds-input" />
+								</div>
+								<div id="g2P1_P2_PN.error" class="slds-form-element__help" style="text-align: left"></div>
+							</div>
+
+							<!-- Button to Generate Secret -->
+							<button id="g2GenerateP1Secret" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Generate Secret</button>
+
+							<!-- g2P1Secret -->
+							<div id="g2P1Secret.div" class="slds-form-element" style="text-align: left">
+								<label class="slds-form-element__label" for="g2P1Secret">
+									<abbr class="slds-required" title="required">* </abbr>
+									Secret <span style="font-size: xxx-large">🤫</span>:
+								</label>
+								<div class="slds-form-element__control">
+									<input id="g2P1Secret" type="text" readonly disabled required class="slds-input" />
+								</div>
+							</div>
+						</td>
+						<td>
+							<!-- P2_P1_PN -->
+							<div id="g2P2_P1_PN.div" class="slds-form-element" style="text-align: left">
+								<label class="slds-form-element__label" for="g2P2_P1_PN">
+									<abbr class="slds-required" title="required">* </abbr>
+									P1_PN
+								</label>
+								<div class="slds-form-element__control">
+									<input id="g2P2_P1_PN" type="number" min="1" max="1006" required class="slds-input" />
+								</div>
+								<div id="g2P2_P1_PN.error" class="slds-form-element__help" style="text-align: left"></div>
+							</div>
+
+							<!-- Button to Generate Secret -->
+							<button id="g2GenerateP2Secret" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Generate Secret</button>
+
+							<!-- g2P2Secret -->
+							<div id="g2P2Secret.div" class="slds-form-element" style="text-align: left">
+								<label class="slds-form-element__label" for="g2P2Secret">
+									<abbr class="slds-required" title="required">* </abbr>
+									Secret <span style="font-size: xxx-large">🤐</span>:
+								</label>
+								<div class="slds-form-element__control">
+									<input id="g2P2Secret" type="text" readonly disabled required class="slds-input" />
 								</div>
 							</div>
 						</td>

@@ -13,3 +13,10 @@ th {
     padding: 10px !important;
     /* Space inside cells */
 }
+
+.vertical-text {
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    letter-spacing: 5px;
+}
