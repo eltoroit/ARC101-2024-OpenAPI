@@ -30,35 +30,35 @@
 				<div class="slds-text-heading_large">Encryption Games - Game #2</div>
 			</div>
 			<div>
-				<table>
+				<table class="formatTable">
 					<tr>
-						<td colspan="2">
+						<td class="formatCell" colspan="2">
 							<!-- P: Prime value -->
 							<div id="p2Prime.div" class="slds-form-element" style="text-align: left">
 								<label class="slds-form-element__label" for="p2Prime"> Prime Value: </label>
 								<div class="slds-form-element__control">
-									<input id="p2Prime" type="text" readonly disabled required class="slds-input" />
+									<input id="p2Prime" type="text" disabled required class="slds-input" />
 								</div>
 							</div>
 						</td>
-						<td>
+						<td class="formatCell">
 							<!-- G: Generator -->
 							<div id="p2Generator.div" class="slds-form-element" style="text-align: left">
 								<label class="slds-form-element__label" for="p2Generator"> Generator: </label>
 								<div class="slds-form-element__control">
-									<input id="p2Generator" type="text" readonly disabled required class="slds-input" />
+									<input id="p2Generator" type="text" disabled required class="slds-input" />
 								</div>
 							</div>
 						</td>
 					</tr>
 					<tr>
-						<th colspan="2">
+						<th class="formatCell" colspan="2">
 							<!-- Player 1 -->
 							<div class="slds-align_absolute-center">
 								<div class="slds-text-heading_small slds-m-vertical_xx-small">Player 1</div>
 							</div>
 						</th>
-						<th colspan="2">
+						<th class="formatCell" colspan="2">
 							<!-- Player 2 -->
 							<div class="slds-align_absolute-center">
 								<div class="slds-text-heading_small slds-m-vertical_xx-small">Player 2</div>
@@ -66,18 +66,29 @@
 						</th>
 					</tr>
 					<tr>
-						<th class="vertical-text">Step #1</th>
-						<td>
-							<!-- P1_PRIVATE ( 2-digit number) -->
-							<div id="g2P1_PRIVATE.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g2P1_PRIVATE">
-									<abbr class="slds-required" title="required">* </abbr>
-									P1_PRIVATE ( 2-digit number):
-								</label>
-								<div class="slds-form-element__control">
-									<input id="g2P1_PRIVATE" type="number" min="10" max="99" required class="slds-input" />
-								</div>
-								<div id="g2P1_PRIVATE.error" class="slds-form-element__help" style="text-align: left"></div>
+						<th class="formatCell vertical-text">Step #1</th>
+						<td class="formatCell">
+							<div>
+								<table>
+									<tr>
+										<td>
+											<span style="font-size: xxx-large">🤫</span>
+										</td>
+										<td width="100%">
+											<!-- P1_PRIVATE ( 2-digit number) -->
+											<div id="g2P1_PRIVATE.div" class="slds-form-element" style="text-align: left">
+												<label class="slds-form-element__label" for="g2P1_PRIVATE">
+													<abbr class="slds-required" title="required">* </abbr>
+													P1_PRIVATE ( 2-digit number):
+												</label>
+												<div class="slds-form-element__control">
+													<input id="g2P1_PRIVATE" type="number" min="10" max="99" required class="slds-input" />
+												</div>
+												<div id="g2P1_PRIVATE.error" class="slds-form-element__help" style="text-align: left"></div>
+											</div>
+										</td>
+									</tr>
+								</table>
 							</div>
 
 							<!-- Button to Generate P1_PN -->
@@ -90,21 +101,32 @@
 									P1_PN:
 								</label>
 								<div class="slds-form-element__control">
-									<input id="g2P1_PN" type="text" readonly disabled required class="slds-input" />
+									<input id="g2P1_PN" type="text" disabled required class="slds-input" />
 								</div>
 							</div>
 						</td>
-						<td>
-							<!-- P2_PRIVATE ( 2-digit number) -->
-							<div id="g2P2_PRIVATE.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g2P2_PRIVATE">
-									<abbr class="slds-required" title="required">* </abbr>
-									P2_PRIVATE ( 2-digit number):
-								</label>
-								<div class="slds-form-element__control">
-									<input id="g2P2_PRIVATE" type="number" min="10" max="99" required class="slds-input" />
-								</div>
-								<div id="g2P2_PRIVATE.error" class="slds-form-element__help" style="text-align: left"></div>
+						<td class="formatCell">
+							<div>
+								<table>
+									<tr>
+										<td>
+											<span style="font-size: xxx-large">🤫</span>
+										</td>
+										<td width="100%">
+											<!-- P2_PRIVATE ( 2-digit number) -->
+											<div id="g2P2_PRIVATE.div" class="slds-form-element" style="text-align: left">
+												<label class="slds-form-element__label" for="g2P2_PRIVATE">
+													<abbr class="slds-required" title="required">* </abbr>
+													P2_PRIVATE ( 2-digit number):
+												</label>
+												<div class="slds-form-element__control">
+													<input id="g2P2_PRIVATE" type="number" min="10" max="99" required class="slds-input" />
+												</div>
+												<div id="g2P2_PRIVATE.error" class="slds-form-element__help" style="text-align: left"></div>
+											</div>
+										</td>
+									</tr>
+								</table>
 							</div>
 
 							<!-- Button to Generate P2_PN -->
@@ -117,14 +139,14 @@
 									P2_PN:
 								</label>
 								<div class="slds-form-element__control">
-									<input id="g2P2_PN" type="text" readonly disabled required class="slds-input" />
+									<input id="g2P2_PN" type="text" disabled required class="slds-input" />
 								</div>
 							</div>
 						</td>
 					</tr>
 					<tr>
-						<th class="vertical-text">Step #2</th>
-						<td>
+						<th class="formatCell vertical-text">Step #2</th>
+						<td class="formatCell">
 							<!-- P1_P2_PN -->
 							<div id="g2P1_P2_PN.div" class="slds-form-element" style="text-align: left">
 								<label class="slds-form-element__label" for="g2P1_P2_PN">
@@ -141,17 +163,28 @@
 							<button id="g2GenerateP1Secret" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Generate Secret</button>
 
 							<!-- g2P1Secret -->
-							<div id="g2P1Secret.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g2P1Secret">
-									<abbr class="slds-required" title="required">* </abbr>
-									Secret <span style="font-size: xxx-large">🤫</span>:
-								</label>
-								<div class="slds-form-element__control">
-									<input id="g2P1Secret" type="text" readonly disabled required class="slds-input" />
-								</div>
+							<div>
+								<table>
+									<tr>
+										<td>
+											<span style="font-size: xxx-large">🤫</span>
+										</td>
+										<td width="100%">
+											<div id="g2P1Secret.div" class="slds-form-element" style="text-align: left">
+												<label class="slds-form-element__label" for="g2P1Secret">
+													<abbr class="slds-required" title="required">* </abbr>
+													Secret:
+												</label>
+												<div class="slds-form-element__control">
+													<input id="g2P1Secret" type="text" disabled required class="slds-input" />
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</td>
-						<td>
+						<td class="formatCell">
 							<!-- P2_P1_PN -->
 							<div id="g2P2_P1_PN.div" class="slds-form-element" style="text-align: left">
 								<label class="slds-form-element__label" for="g2P2_P1_PN">
@@ -168,14 +201,25 @@
 							<button id="g2GenerateP2Secret" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Generate Secret</button>
 
 							<!-- g2P2Secret -->
-							<div id="g2P2Secret.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g2P2Secret">
-									<abbr class="slds-required" title="required">* </abbr>
-									Secret <span style="font-size: xxx-large">🤐</span>:
-								</label>
-								<div class="slds-form-element__control">
-									<input id="g2P2Secret" type="text" readonly disabled required class="slds-input" />
-								</div>
+							<div>
+								<table>
+									<tr>
+										<td>
+											<span style="font-size: xxx-large">🤫</span>
+										</td>
+										<td width="100%">
+											<div id="g2P2Secret.div" class="slds-form-element" style="text-align: left">
+												<label class="slds-form-element__label" for="g2P2Secret">
+													<abbr class="slds-required" title="required">* </abbr>
+													Secret:
+												</label>
+												<div class="slds-form-element__control">
+													<input id="g2P2Secret" type="text" disabled required class="slds-input" />
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</td>
 					</tr>
@@ -186,3 +230,16 @@
 		</div>
 	</body>
 </html>
+
+<!-- 
+<table>
+									<tr>
+										<td>
+											<span style="font-size: xxx-large">🤫</span>
+										</td>
+										<td width="100%">
+											
+										</td>
+									</tr>
+								</table>
+-->

@@ -15,7 +15,7 @@ export default class InputHandler {
 		const error = document.getElementById(`${name}.error`);
 		const number = Number(input.value);
 
-		if (name[1] === 1) {
+		if (Number(name[1]) === 1) {
 			document.getElementById("g1Encrypt").disabled = true;
 			document.getElementById("g1Decrypt").disabled = true;
 		} else {

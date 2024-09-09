@@ -1,4 +1,4 @@
-table {
+.formatTable {
     border: 1px solid black !important;
     /* border-spacing: 10px !important; */
     /* Space between cells */
@@ -6,8 +6,7 @@ table {
     /* Ensure spacing is applied */
 }
 
-td,
-th {
+.formatCell {
     border: 1px solid black !important;
     text-align: center !important;
     padding: 10px !important;
