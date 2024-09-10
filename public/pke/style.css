@@ -1,16 +1,16 @@
-.formatTable {
+.borderTable {
     border: 1px solid black !important;
-    /* border-spacing: 10px !important; */
-    /* Space between cells */
-    /* border-collapse: separate !important; */
-    /* Ensure spacing is applied */
+
 }
 
-.formatCell {
-    border: 1px solid black !important;
+.borderStep {
+    border-bottom: 1px solid black !important;
+}
+
+.formatTable {
     text-align: center !important;
     padding: 10px !important;
-    /* Space inside cells */
+    border-left: 1px solid black !important;
 }
 
 .vertical-text {
@@ -18,4 +18,12 @@
     transform: rotate(180deg);
     white-space: nowrap;
     letter-spacing: 5px;
+    width: 100%;
+}
+
+.secret {
+    /* Safari and Chrome */
+    -webkit-text-security: disc;
+    /* Firefox */
+    text-security: disc;
 }

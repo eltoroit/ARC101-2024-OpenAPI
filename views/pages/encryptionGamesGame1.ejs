@@ -6,15 +6,11 @@
 		<%- include('../partials/head', {title}); %>
 		<script type="module">
 			import InputHandler from "./pke/script.js";
-
 			const inputHandler = new InputHandler();
 
-			// Add event listener to the button
-			document.getElementById("g1SharedKey").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1SharedKey"));
-			document.getElementById("g1GuardedValue").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1GuardedValue"));
-			document.getElementById("g1EncryptedValue").addEventListener("input", inputHandler.changedInput.bind(inputHandler, "g1EncryptedValue"));
-			document.getElementById("g1Encrypt").addEventListener("click", inputHandler.g1Encrypt.bind(inputHandler));
-			document.getElementById("g1Decrypt").addEventListener("click", inputHandler.g1Decrypt.bind(inputHandler));
+			setTimeout(() => {
+				inputHandler.initialize();
+			}, 0);
 		</script>
 	</head>
 	<body>
@@ -23,48 +19,75 @@
 				<div class="slds-text-heading_large">Encryption Games - Game #1</div>
 			</div>
 			<div>
-				<table class="formatTable">
+				<table class="borderTable formatTable">
+					<!-- Row #1: Titles -->
+					<tr>
+						<!-- Encryption -->
+						<th class="borderTable formatTable">
+							<div class="slds-align_absolute-center">
+								<div class="slds-text-heading_small slds-m-vertical_xx-small">Encryption (Player #1)</div>
+							</div>
+						</th>
+						<!-- Decryption -->
+						<th class="borderTable formatTable">
+							<div class="slds-align_absolute-center">
+								<div class="slds-text-heading_small slds-m-vertical_xx-small">Decryption (Player #2)</div>
+							</div>
+						</th>
+					</tr>
+
+					<!-- Row #2: Shared Keys -->
 					<tr>
 						<!-- P1: Shared Secret (3-digits number) -->
-						<td class="formatCell" colspan="2">
+						<td class="formatTable">
 							<table>
 								<tr>
 									<td>
 										<span style="font-size: xxx-large">🤫</span>
 									</td>
 									<td width="100%">
-										<div id="g1SharedKey.div" class="slds-form-element">
-											<label class="slds-form-element__label" for="g1SharedKey">
+										<div id="g1P1SharedKey.div" class="slds-form-element">
+											<label class="slds-form-element__label" for="g1P1SharedKey">
 												<abbr class="slds-required" title="required">* </abbr>
 												Shared Key (3-digits number):
 											</label>
 											<div class="slds-form-element__control">
-												<input type="number" id="g1SharedKey" min="100" max="999" required class="slds-input" />
+												<input id="g1P1SharedKey" data-input="secret" type="number" min="100" max="999" required class="slds-input secret" />
 											</div>
-											<div class="slds-form-element__help" style="text-align: left" id="g1SharedKey.error"></div>
+											<div class="slds-form-element__help" style="text-align: left" id="g1P1SharedKey.error"></div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<!-- P2: Shared Secret (3-digits number) -->
+						<td class="formatTable">
+							<table>
+								<tr>
+									<td>
+										<span style="font-size: xxx-large">🤫</span>
+									</td>
+									<td width="100%">
+										<div id="g1P2SharedKey.div" class="slds-form-element">
+											<label class="slds-form-element__label" for="g1P2SharedKey">
+												<abbr class="slds-required" title="required">* </abbr>
+												Shared Key (3-digits number):
+											</label>
+											<div class="slds-form-element__control">
+												<input id="g1P2SharedKey" data-input="secret" type="number" min="100" max="999" required class="slds-input secret" />
+											</div>
+											<div class="slds-form-element__help" style="text-align: left" id="g1P2SharedKey.error"></div>
 										</div>
 									</td>
 								</tr>
 							</table>
 						</td>
 					</tr>
+
+					<!-- Row #3 -->
 					<tr>
-						<!-- Encryption -->
-						<th class="formatCell">
-							<div class="slds-align_absolute-center">
-								<div class="slds-text-heading_small slds-m-vertical_xx-small">Encryption (Player #2)</div>
-							</div>
-						</th>
-						<!-- Decryption -->
-						<th class="formatCell">
-							<div class="slds-align_absolute-center">
-								<div class="slds-text-heading_small slds-m-vertical_xx-small">Decryption (Player #1)</div>
-							</div>
-						</th>
-					</tr>
-					<tr>
-						<td class="formatCell">
-							<!-- P1: Guarded Value ( 2-digit number) -->
+						<!-- P1: Sensitive Data ( 2-digit number) -->
+						<td class="formatTable">
 							<div>
 								<table>
 									<tr>
@@ -75,10 +98,10 @@
 											<div id="g1GuardedValue.div" class="slds-form-element" style="text-align: left">
 												<label class="slds-form-element__label" for="g1GuardedValue">
 													<abbr class="slds-required" title="required">* </abbr>
-													Guarded Value ( 2-digit number):
+													Sensitive Data ( 2-digit number):
 												</label>
 												<div class="slds-form-element__control">
-													<input id="g1GuardedValue" type="number" min="10" max="99" required class="slds-input" />
+													<input id="g1GuardedValue" data-input="secret" type="number" min="10" max="99" required class="slds-input secret" />
 												</div>
 												<div id="g1GuardedValue.error" class="slds-form-element__help" style="text-align: left"></div>
 											</div>
@@ -86,11 +109,38 @@
 									</tr>
 								</table>
 							</div>
+						</td>
+						<!-- P2: Encrypted Result -->
+						<td class="formatTable">
+							<div id="g1EncryptedValue.div" class="slds-form-element" style="text-align: left">
+								<label class="slds-form-element__label" for="g1EncryptedValue">
+									<abbr class="slds-required" title="required">* </abbr>
+									Encrypted Result:
+								</label>
+								<div class="slds-form-element__control">
+									<input id="g1EncryptedValue" type="number" min="1000" max="98901" required class="slds-input" />
+								</div>
+								<div id="g1EncryptedValue.error" class="slds-form-element__help" style="text-align: left"></div>
+							</div>
+						</td>
+					</tr>
 
-							<!-- Button to encrypt -->
+					<!-- Row #4: Buttons -->
+					<tr>
+						<!-- Button to encrypt -->
+						<td class="formatTable">
 							<button id="g1Encrypt" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Encrypt</button>
+						</td>
+						<!-- Button to encrypt -->
+						<td class="formatTable">
+							<button id="g1Decrypt" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Decrypt</button>
+						</td>
+					</tr>
 
-							<!-- P1: Encrypted Result -->
+					<!-- Row #5: Results -->
+					<tr>
+						<!-- P1: Encrypted Result -->
+						<td class="formatTable">
 							<div id="g1EncryptedResult.div" class="slds-form-element" style="text-align: left">
 								<label class="slds-form-element__label" for="g1EncryptedResult">
 									<abbr class="slds-required" title="required">* </abbr>
@@ -102,23 +152,8 @@
 							</div>
 						</td>
 
-						<td class="formatCell">
-							<!-- P1: Encrypted Result -->
-							<div id="g1EncryptedValue.div" class="slds-form-element" style="text-align: left">
-								<label class="slds-form-element__label" for="g1EncryptedValue">
-									<abbr class="slds-required" title="required">* </abbr>
-									Encrypted Result:
-								</label>
-								<div class="slds-form-element__control">
-									<input id="g1EncryptedValue" type="number" min="1000" max="98901" required class="slds-input" />
-								</div>
-								<div id="g1EncryptedValue.error" class="slds-form-element__help" style="text-align: left"></div>
-							</div>
-
-							<!-- Button to encrypt -->
-							<button id="g1Decrypt" class="slds-button slds-button_brand slds-m-vertical_xx-small" disabled>Decrypt</button>
-
-							<!-- P1: Guarded Value ( 2-digit number) -->
+						<!-- P2: Sensitive Data ( 2-digit number) -->
+						<td class="formatTable">
 							<div>
 								<table>
 									<tr>
@@ -129,15 +164,32 @@
 											<div id="g1GuardedValueResult.div" class="slds-form-element" style="text-align: left">
 												<label class="slds-form-element__label" for="g1GuardedValueResult">
 													<abbr class="slds-required" title="required">* </abbr>
-													Guarded Value ( 2-digit number):
+													Sensitive Data ( 2-digit number):
 												</label>
 												<div class="slds-form-element__control">
-													<input id="g1GuardedValueResult" type="text" disabled required class="slds-input" />
+													<input id="g1GuardedValueResult" data-input="secret" type="text" disabled required class="slds-input secret" />
 												</div>
 											</div>
 										</td>
 									</tr>
 								</table>
+							</div>
+						</td>
+					</tr>
+
+					<!-- Row #6: Toggle -->
+					<tr>
+						<td class="borderTable formatTable" colspan="2">
+							<div class="slds-form-element">
+								<label class="slds-checkbox_toggle slds-grid">
+									<span class="slds-form-element__label slds-m-bottom_none">Do you want to show secrets?</span>
+									<input id="showSecrets" type="checkbox" value="checkbox-toggle-16" />
+									<span class="slds-checkbox_faux_container">
+										<span class="slds-checkbox_faux"></span>
+										<span class="slds-checkbox_on slds-m-top_x-small">Visible</span>
+										<span class="slds-checkbox_off slds-m-top_x-small">Hidden</span>
+									</span>
+								</label>
 							</div>
 						</td>
 					</tr>
