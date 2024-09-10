@@ -167,7 +167,5 @@ export default class InputHandler {
 		document.querySelectorAll(`[data-input="secret"]`).forEach((input) => {
 			input.classList[this.hideSecrets ? "remove" : "add"]("secret");
 		});
-
-		// document.getElementById("showSecrets").checked = this.hideSecrets;
 	}
 }
