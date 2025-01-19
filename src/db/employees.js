@@ -4,15 +4,15 @@ export class EmployeesDB {
 	employees = [
 		{
 			id: 0,
-			lastName: "Peacock",
-			firstName: "Margaret",
-			title: "Sales Representative",
+			lastName: "Al",
+			firstName: "Coholic",
+			title: "Beverage Manager",
 		},
 		{
 			id: 1,
-			lastName: "Fuller",
-			firstName: "Andrew",
-			title: "Vice President, Sales",
+			lastName: "Juana",
+			firstName: "Buy",
+			title: "Account Executive",
 		},
 	];
 
