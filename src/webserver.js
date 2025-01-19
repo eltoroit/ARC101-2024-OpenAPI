@@ -8,7 +8,8 @@ import swaggerUi from "swagger-ui-express";
 import { EmployeesDB } from "./db/employees.js";
 import OpenApiValidator from "express-openapi-validator";
 import { EmployeesController } from "./controllers/employees-controller.js";
-import swaggerDocument from "./controllers/employees-controller.json" assert { type: "json" };
+// The error "SyntaxError: Unexpected identifier 'assert'" you're encountering when trying to import a JSON file in Node.js v22 is due to the fact that the assert syntax for JSON imports has been replaced with the with syntax in Node.js 22.
+import swaggerDocument from "./controllers/employees-controller.json" with { type: "json" };
 
 export default class Webserver {
 	app;
